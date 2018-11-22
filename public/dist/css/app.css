@@ -7,6 +7,29 @@
 body { 
     font: 13px Helvetica, Arial; 
 }
+#searchbar-group {
+
+    position: fixed;
+    top: 40px;
+    z-index: 999;
+    margin-left: 200px;
+    /* to be changed for a real centered-aligned input, and full with on phone  */
+}
+#searchbar-icon.selected {
+    transform: rotate(180deg); 
+}
+#search-list{
+
+    position: fixed;
+    top: 90px;
+    z-index: 999;
+    margin-left: 200px;
+    max-width: 200px;
+    background: white
+
+}
+#search-list > li:nth-child(odd)
+ {background: rgb(212, 212, 212)}
      
 #map {
     width: 100vw;
