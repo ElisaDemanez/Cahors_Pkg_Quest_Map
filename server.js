@@ -4,7 +4,10 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var coordinates = require('./pokestops_cahors.json')
+var coordinates = require('./pokestops_cahors.json');
+var quest = require('./quest.json');
+
+console.log(quest.quest)
 
 const port = 8000;
   
@@ -15,7 +18,7 @@ app.use(express.static('public'));
 
   
   io.on('connection', function(socket){
-    socket.emit('connection', {coordinates:coordinates});
+    socket.emit('connection', {coordinates:coordinates, quest:quest.quest});
   });
   
   http.listen(port, function(){

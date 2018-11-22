@@ -14,16 +14,27 @@ var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
- 
-// add the tile layer to the map
+
 layer.addTo(map);
 
 
 socket.on('connection', function(data) {
+	var selectOptions ="";
+	data.quest.forEach((element,index) => {
+		selectOptions += `<option value="${index}">"${element.name}"</option>`
+	});
+
+// display pokestops
 data.coordinates.pokestops.forEach(element => {
-	console.log(element)
-	var content = `<b> ${element.name} </b>`
-	 L.marker([element.coordinates[1],element.coordinates[0]]).addTo(map).bindPopup(content)
+	var content = `<b> ${element.name} </b>
+	<br>
+	<select name="yolo">
+  ${selectOptions}
+</select>
+`
+	var marker = L.marker([element.coordinates[1],element.coordinates[0]])
+	marker.addTo(map)
+	marker.bindPopup(content)
 });
 
 })
