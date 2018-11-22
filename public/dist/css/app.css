@@ -19,7 +19,7 @@ body {
     transform: rotate(180deg); 
 }
 #search-list{
-
+    display: none;
     position: fixed;
     top: 90px;
     z-index: 999;
