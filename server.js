@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var coordinates = require('./pokestops_cahors.json')
 
 const port = 8000;
   
@@ -14,7 +15,7 @@ app.use(express.static('public'));
 
   
   io.on('connection', function(socket){
-    console.log('a user connected');
+    socket.emit('connection', {coordinates:coordinates});
   });
   
   http.listen(port, function(){

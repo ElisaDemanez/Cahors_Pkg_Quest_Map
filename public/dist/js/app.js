@@ -17,3 +17,9 @@ var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
  
 // add the tile layer to the map
 layer.addTo(map);
+
+
+socket.on('connection', function(data) {
+console.log(data.coordinates)
+
+})
