@@ -3,7 +3,7 @@ var socket = io();
  
 // initialize the map
 var map = L.map('map', {
-  scrollWheelZoom: false
+  scrollWheelZoom: true
 });
  
 // set the position and zoom level of the map
@@ -24,6 +24,18 @@ socket.on('connection', function(data) {
 		selectOptions += `<option value="${index}">"${element.name}"</option>`
 	});
 
+// icons pokestops
+var pokestopIcon = L.icon({
+    iconUrl: '/dist/img/pokestopIcon2.png',
+    shadowUrl: '',
+
+    iconSize:     [50, 50], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
 // display pokestops
 data.coordinates.pokestops.forEach(element => {
 	var content = `<b> ${element.name} </b>
@@ -32,7 +44,7 @@ data.coordinates.pokestops.forEach(element => {
   ${selectOptions}
 </select>
 `
-	var marker = L.marker([element.coordinates[1],element.coordinates[0]])
+	var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
 	marker.addTo(map)
 	marker.bindPopup(content)
 });
