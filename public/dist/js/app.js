@@ -20,6 +20,10 @@ layer.addTo(map);
 
 
 socket.on('connection', function(data) {
-console.log(data.coordinates)
+data.coordinates.pokestops.forEach(element => {
+	console.log(element)
+	var content = `<b> ${element.name} </b>`
+	 L.marker([element.coordinates[1],element.coordinates[0]]).addTo(map).bindPopup(content)
+});
 
 })
