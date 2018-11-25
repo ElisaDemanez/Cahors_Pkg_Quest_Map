@@ -15,26 +15,26 @@ var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-layer.addTo(map);
 
 
 socket.on('connection', function(data) {
+	//select for quests
 	var selectOptions ="";
 	data.quest.forEach((element,index) => {
 		selectOptions += `<option value="${index}">"${element.name}"</option>`
 	});
 
 // display pokestops
-data.coordinates.pokestops.forEach(element => {
-	var content = `<b> ${element.name} </b>
-	<br>
-	<select name="yolo">
-  ${selectOptions}
-</select>
-`
-	var marker = L.marker([element.coordinates[1],element.coordinates[0]])
-	marker.addTo(map)
-	marker.bindPopup(content)
-});
+	data.coordinates.pokestops.forEach(element => {
+		var content = `<b> ${element.name} </b>
+		<br>
+		<select name="yolo">
+		${selectOptions}
+		</select>
+	`
+		var marker = L.marker([element.coordinates[1],element.coordinates[0]])
+		marker.addTo(map)
+		marker.bindPopup(content)
+	});
 
 })
