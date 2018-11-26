@@ -8,29 +8,57 @@ body {
     font: 13px Helvetica, Arial; 
 }
 #searchbar-group {
-
     position: fixed;
-    top: 40px;
     z-index: 999;
-    margin-left: 200px;
     /* to be changed for a real centered-aligned input, and full with on phone  */
+    width: 80vw;
+    background: white;
+    display: flex;
+    margin: 20px 10vw;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.search-input {
+    height: 30px;
+    border:none;
+    margin:5px;
+    width: 80%;
+    color: #303030;
+}
+.searchbar-icon {
+    height: 30px;
+    transition: 0.3s;
 }
 #searchbar-icon.selected {
-    transform: rotate(180deg); 
+    transform: rotate(-180deg); 
+    transition: 0.3s;
 }
 #search-list{
     display: none;
     position: fixed;
-    top: 90px;
+    top: 80px;
     z-index: 999;
-    margin-left: 200px;
-    max-width: 200px;
-    background: white
-
+    width: 90vw;
+    margin: 0 5vw;
+    list-style: none;
 }
-#search-list > li:nth-child(odd)
- {background: rgb(212, 212, 212)}
-     
+/* #search-list > li:nth-child(odd)
+ {background: rgb(212, 212, 212)} */
+ #search-list li {
+    margin: 5px;
+    border-radius: 10px;
+    background: white;
+    padding: 10px;
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #303030;
+ }
 #map {
     width: 100vw;
     height: 100vh;

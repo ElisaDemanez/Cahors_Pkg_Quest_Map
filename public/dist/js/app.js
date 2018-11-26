@@ -2,8 +2,13 @@ var socket = io();
  
 // initialize the map
 var map = L.map('map', {
-  scrollWheelZoom: true
+	scrollWheelZoom: true,
+	zoomControl: false
 });
+
+L.control.zoom({
+	position:'bottomleft'
+}).addTo(map);
  
 // set the position and zoom level of the map
 map.setView([44.4490425,1.4384117], 15);
