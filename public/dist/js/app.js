@@ -1,9 +1,8 @@
-console.log('holà');
 var socket = io(); 
  
 // initialize the map
 var map = L.map('map', {
-  scrollWheelZoom: false
+  scrollWheelZoom: true
 });
  
 // set the position and zoom level of the map
@@ -15,6 +14,16 @@ var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+// icons pokestops
+var pokestopIcon = L.icon({
+    iconUrl: '/dist/img/pokestopIcon2.png',
+    shadowUrl: '',
+     iconSize:     [50, 50], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [4.3, -45] // point from which the popup should open relative to the iconAnchor
+});
 
 
 socket.on('connection', function(data) {
@@ -31,8 +40,9 @@ socket.on('connection', function(data) {
 		<select name="yolo">
 		${selectOptions}
 		</select>
+		<button> Valider </button>
 	`
-		var marker = L.marker([element.coordinates[1],element.coordinates[0]])
+		var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
 		marker.addTo(map)
 		marker.bindPopup(content)
 	});
