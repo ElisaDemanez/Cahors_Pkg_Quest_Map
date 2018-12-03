@@ -30,7 +30,6 @@ var pokestopIcon = L.icon({
     popupAnchor:  [4.3, -45] // point from which the popup should open relative to the iconAnchor
 });
 
-
 socket.on('connection', function(data) {
 	//select for quests
 	var selectOptions ="";
@@ -39,17 +38,28 @@ socket.on('connection', function(data) {
 	});
 
 // display pokestops
+	var x = 0
 	data.coordinates.pokestops.forEach(element => {
+		x += 1
 		var content = `<b> ${element.name} </b>
 		<br>
-		<select name="yolo">
+		<select name="selectedQuest" id="selectedQuest">
 		${selectOptions}
 		</select>
-		<button> Valider </button>
+		<button onclick="validateQuest()"> Valider </button>
 	`
 		var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
 		marker.addTo(map)
 		marker.bindPopup(content)
+
 	});
 
+	
+
 })
+
+function validateQuest () {
+	// affiche le text de la quete selectionné dans la console pour test
+	var q = document.getElementById('selectedQuest')
+	console.log(q[q.value].text)
+}
