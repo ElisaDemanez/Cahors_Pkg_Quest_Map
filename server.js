@@ -8,7 +8,7 @@ var io = require('socket.io')(http);
 var coordinates = require('./pokestops_cahors.json');
 var quest = require('./quest.json');
 
-console.log(quest.quest)
+/* console.log(quest.quest) */
 
 const port = 8000;
   
