@@ -55,7 +55,9 @@ function generateLi( id) {
     var li = document.createElement('li')
     li.id =  `${id}`
     var node = document.createTextNode(quest[id].name);
+    var pokemon = document.createTextNode(quest[id].pokemon);
     li.appendChild(node)
+    li.appendChild(pokemon)
 
     // if click on list, add it in select.
     li.addEventListener('click', function(e){
