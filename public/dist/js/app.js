@@ -38,12 +38,10 @@ socket.on('connection', function(data) {
 	});
 
 // display pokestops
-	var x = 0
-	data.coordinates.pokestops.forEach(element => {
-		x += 1
-		var content = `<b> ${element.name} </b>
+	data.coordinates.pokestops.forEach((element, index) => {
+		var content = `<b> ${element.name}  </b>
 		<br>
-		<select name="selectedQuest" id="selectedQuest">
+		<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
 		${selectOptions}
 		</select>
 		<button onclick="validateQuest()"> Valider </button>
@@ -51,7 +49,6 @@ socket.on('connection', function(data) {
 		var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
 		marker.addTo(map)
 		marker.bindPopup(content)
-
 	});
 
 	
@@ -59,7 +56,8 @@ socket.on('connection', function(data) {
 })
 
 function validateQuest () {
-	// affiche le text de la quete selectionné dans la console pour test
+	// affiche l'id de la quete selectionné  et du pokestop dans la console pour test
 	var q = document.getElementById('selectedQuest')
-	console.log(q[q.value].text)
+	console.log("quest id : ",q.value)
+	console.log("pokestop id : ",q.dataset.pokestopId)
 }
