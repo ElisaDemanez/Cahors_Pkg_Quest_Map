@@ -21,7 +21,7 @@ module.exports = {
       if (error) {
         console.log("ERRORE",error)
       }
-      res.send({
+      console.log({
         success: true,
         message: 'Quest saved successfully!',
         data: new_quest
@@ -33,7 +33,7 @@ module.exports = {
   findAll: function(req, res) {
     Quest.find({}, 'questID pokestopID', function (error, quests) {
       if (error) { console.error(error); }
-      res.send({
+      console.log({
         quests: quests
       })
     }).sort({_id:-1})
@@ -42,16 +42,16 @@ module.exports = {
   // Find a single Quest with a QuestId
   findOne: function(req, res) {
     var db = req.db;
-    Quest.findById(req.params.id, 'name pokestop', function (error, quest) {
+    Quest.findById(req.params.id, 'questID pokestopID', function (error, quest) {
       if (error) { console.error(error); }
-      res.send(quest)
+      console.log(quest)
     })
   },
   
   // Update a quest identified by the questId in the request
   update: function(req, res) {
     var db = req.db;
-    Quest.findById(req.params.id, 'name pokestop ', function (error, quest) {
+    Quest.findById(req.params.id, 'questID pokestopID ', function (error, quest) {
       if (error) { console.error(error); }
       
       quest.name = req.body.name;
@@ -60,7 +60,7 @@ module.exports = {
         if (error) {
           console.log(error)
         }
-        res.send({
+        console.log({
           success: true,
           message: 'Quest updated',
           data: quest
@@ -76,8 +76,8 @@ module.exports = {
       _id: req.params.id
     }, function(err, quest){
       if (err)
-      res.send(err)
-      res.send({
+      console.log(err)
+      console.log({
         success: true,
         message: "Quest deleted",
         data: quest

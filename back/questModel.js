@@ -2,8 +2,8 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var QuestSchema = new Schema({
-  name: String,
-  pokestop: String
+  questID: Number,
+  pokestopID: Number
 });
 
 var Quest = mongoose.model("Quest", QuestSchema);
