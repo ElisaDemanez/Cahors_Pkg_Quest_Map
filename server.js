@@ -7,8 +7,10 @@ var app = express();
 const mongoose = require('./back/config');
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-//import routes
-const quests = require('./back/questRoute');
+//import controller
+const questController = require('./back/questController');
+
+// si tu veux utiliser une fonction de ce controller fait : questController.create par exemple 
 
 //import dependencies 
 var http = require('http').Server(app);
@@ -30,10 +32,9 @@ app.use(express.static('public'));
   
   io.on('connection', function(socket){
     socket.emit('connection', {coordinates:coordinates, quest:quest.quest});
+    questController.test()
   });
 
-
-  app.use('/', quests);
   
   http.listen(port, function(){
     console.log('listening on *:8000');

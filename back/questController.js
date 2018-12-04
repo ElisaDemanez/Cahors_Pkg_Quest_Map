@@ -1,6 +1,9 @@
 const Quest = require('./questModel');
 
 module.exports = {
+  test: function(req,res){
+    console.log("test")
+  },
   // Create and Save a new Quest
   create: function(req, res) {
     
