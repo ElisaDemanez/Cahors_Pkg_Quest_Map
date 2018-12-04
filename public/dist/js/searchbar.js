@@ -39,9 +39,9 @@ function populateList(){
 
     // Filter on title    
    let questIndexes = Object.keys(quest).filter(function(index) {
-        var plant = quest[index];
+        var questItem = quest[index];
         // to complexify later
-        return plant.name.toLowerCase().includes(Input.value.toLowerCase())
+        return questItem.name.toLowerCase().includes(Input.value.toLowerCase()) 
       });
 
     questIndexes.forEach(element => {
@@ -55,8 +55,12 @@ function generateLi( id) {
     var li = document.createElement('li')
     li.id =  `${id}`
     var node = document.createTextNode(quest[id].name);
+    var details = document.createTextNode(' : ');
+
     var pokemon = document.createTextNode(quest[id].pokemon);
     li.appendChild(node)
+    li.appendChild(details)
+
     li.appendChild(pokemon)
 
     // if click on list, add it in select.
