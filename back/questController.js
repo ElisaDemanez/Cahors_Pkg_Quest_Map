@@ -1,14 +1,10 @@
 const Quest = require('./questModel');
 
 module.exports = {
-  test: function(req,res){
-    console.log("test")
-  },
+ 
   // Create and Save a new Quest
   create: function(req, res) {
     
-    var db = req.db;
-    console.log("controler",req)
     var questID = req.questID;
     var pokestopID = req.pokestopID;
     

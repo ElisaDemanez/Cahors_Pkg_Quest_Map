@@ -9,8 +9,6 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 //import controller
 const questController = require('./back/questController');
 
-// si tu veux utiliser une fonction de ce controller fait : questController.create par exemple 
-
 //import dependencies 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -26,17 +24,13 @@ app.use(express.static('public'));
     res.sendFile(__dirname + '/index.html');
   });
 
-
   // send json informations to client 
   io.on('connection', function(socket){
     socket.emit('connection', {coordinates:coordinates, quest:quest.quest});
     questController.findAll()
 
-
     socket.on('quest selected', function (data) {
-      console.log(data)
-  questController.create(data)
-
+    questController.create(data)
     });
   });
 
