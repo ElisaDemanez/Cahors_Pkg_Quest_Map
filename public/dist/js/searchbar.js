@@ -42,6 +42,7 @@ function populateList(){
         var questItem = quest[index];
         // to complexify later
         return questItem.name.toLowerCase().includes(Input.value.toLowerCase()) 
+        || questItem.pokemon.toLowerCase().includes(Input.value.toLowerCase())
       });
 
     questIndexes.forEach(element => {
