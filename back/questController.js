@@ -8,18 +8,18 @@ module.exports = {
   create: function(req, res) {
     
     var db = req.db;
-    var name = req.body.name;
-    var pokestop = req.body.pokestop;
+    console.log("controler",req)
+    var questID = req.questID;
+    var pokestopID = req.pokestopID;
     
     var new_quest = new Quest({
-      name: name,
-      pokestop: pokestop
+      questID: questID,
+      pokestopID: pokestopID
     })
-    
     
     new_quest.save(function (error) {
       if (error) {
-        console.log(error)
+        console.log("ERRORE",error)
       }
       res.send({
         success: true,
@@ -31,7 +31,7 @@ module.exports = {
   
   // Retrieve and return all quests from the database.
   findAll: function(req, res) {
-    Quest.find({}, 'name pokestop', function (error, quests) {
+    Quest.find({}, 'questID pokestopID', function (error, quests) {
       if (error) { console.error(error); }
       res.send({
         quests: quests

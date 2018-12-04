@@ -51,13 +51,13 @@ socket.on('connection', function(data) {
 		marker.bindPopup(content)
 	});
 
-	
-
 })
 
 function validateQuest () {
 	// affiche l'id de la quete selectionné  et du pokestop dans la console pour test
 	var q = document.getElementById('selectedQuest')
-	console.log("quest id : ",q.value)
-	console.log("pokestop id : ",q.dataset.pokestopId)
+	// console.log("quest id : ",q.value)
+	// console.log("pokestop id : ",q.dataset.pokestopId)
+
+	socket.emit('quest selected', {questID: q.value, pokestopID: q.dataset.pokestopId});
 }
