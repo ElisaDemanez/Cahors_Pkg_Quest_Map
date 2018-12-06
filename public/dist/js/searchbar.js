@@ -5,10 +5,10 @@ var List = document.getElementById("search-list")
 var Input = document.getElementById("search-input")
 
 var DDownIconState = false 
-var quest = null;
+var quests = null;
 
 socket.on('connection', function(data) {
-    quest = data.quest
+    quests = data.quests
     populateList()
 });
 
@@ -38,30 +38,29 @@ function populateList(){
     document.getElementById('search-list').innerHTML = null
 
     // Filter on title    
-   let questIndexes = Object.keys(quest).filter(function(index) {
-        var questItem = quest[index];
+   let questsIndexes = Object.keys(quests).filter(function(index) {
+        var questsItem = quests[index];
         // to complexify later
-        return questItem.name.toLowerCase().includes(Input.value.toLowerCase()) 
-        || questItem.pokemon.toLowerCase().includes(Input.value.toLowerCase())
+        return questsItem.name.toLowerCase().includes(Input.value.toLowerCase()) 
+        || questsItem.pokemon.toLowerCase().includes(Input.value.toLowerCase())
       });
 
-    questIndexes.forEach(element => {
+    questsIndexes.forEach(element => {
         generateLi(element)
     });
 
 }
 
-function generateLi( id) {
+function generateLi(id) {
     // create li 
     var li = document.createElement('li')
     li.id =  `${id}`
-    var node = document.createTextNode(quest[id].name);
+    var node = document.createTextNode(quests[id].name);
     var details = document.createTextNode(' : ');
-
-    var pokemon = document.createTextNode(quest[id].pokemon);
+    var pokemon = document.createTextNode(quests[id].pokemon);
+    
     li.appendChild(node)
     li.appendChild(details)
-
     li.appendChild(pokemon)
 
     // if click on list, add it in select.

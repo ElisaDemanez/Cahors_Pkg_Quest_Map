@@ -41,26 +41,25 @@ var pokestopIcon2 = L.icon({
 });
 
 
-var questsBDD;
+var storedQuests;
 async function load(data){
 
 		//get quests from database
-		await $.get('http://localhost:8000/quest', (quests) => { questsBDD = quests.quests })
-	
+		await $.get('http://localhost:8000/quest', (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
-		data.quest.forEach((element,index) => {
+		data.quests.forEach((element,index) => {
 			selectOptions += `<option value="${index}">"${element.name}"</option>`
 		});
 
 	// display pokestops
-		data.coordinates.pokestops.forEach((element, index) => {
+		data.pokestops.forEach((pokestop, index) => {
 			////
 			var temp = [];
-			questsBDD.forEach( (el) =>{
+			storedQuests.forEach( (el) =>{
 				if ( index === el.pokestopID ){
-					temp.push(element)
-					data.quest.forEach((quest,i) => {
+					temp.push(pokestop)
+					data.quests.forEach((quest,i) => {
 						if(el.questID === i ){
 							temp.push(quest)
 						}
@@ -76,19 +75,19 @@ async function load(data){
 				<p>${temp[1].pokemon}</p>
 				<button onclick="modifyQuest()"> Modifier </button>` // temp[0] = données du pokestop , temp[1] = données de la quete 
 
-				var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon2})
+				var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
 				marker.addTo(map)
 				marker.bindPopup(content)
 			} else {
 				// si le pokestop n'a pas de quete dans la bdd 
-				var content = `<b> ${element.name}  </b>
+				var content = `<b> ${pokestop.name}  </b>
 				<br>
 				<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
 				${selectOptions}
 				</select>
 				<button onclick="validateQuest()"> Valider </button>
 			`
-				var marker = L.marker([element.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
+				var marker = L.marker([pokestop.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
 				marker.addTo(map)
 				marker.bindPopup(content)
 			}

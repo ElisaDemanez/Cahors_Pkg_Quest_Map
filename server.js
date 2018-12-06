@@ -12,8 +12,8 @@ const questController = require('./back/questController');
 //import dependencies 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var coordinates = require('./pokestops_cahors.json');
-var quest = require('./quest.json');
+var pokestops = require('./pokestops_cahors.json');
+var quests = require('./quest.json');
 
 
 const port = 8000;
@@ -27,7 +27,7 @@ app.use('/', questRoute);
 
   // send json informations to client 
   io.on('connection', function(socket){
-    socket.emit('connection', {coordinates:coordinates, quest:quest.quest});
+    socket.emit('connection', {pokestops:pokestops.pokestops, quests:quests.quest});
 
     socket.on('quest selected', function (data) {
     questController.create(data)
