@@ -17,11 +17,7 @@ module.exports = {
       if (error) {
         console.log("ERRORE",error)
       }
-      console.log({
-        success: true,
-        message: 'Quest saved successfully!',
-        data: new_quest
-      })
+      console.log('add success')
     })
   },
   
@@ -29,9 +25,7 @@ module.exports = {
   findAll: function(req, res) {
     Quest.find({}, 'questID pokestopID', function (error, quests) {
       if (error) { console.error(error); }
-      console.log({
-        quests: quests
-      })
+      res.send({quests})
     }).sort({_id:-1})
   },
   
@@ -40,7 +34,7 @@ module.exports = {
     var db = req.db;
     Quest.findById(req.params.id, 'questID pokestopID', function (error, quest) {
       if (error) { console.error(error); }
-      console.log(quest)
+      res.send(quest)
     })
   },
   
@@ -56,7 +50,7 @@ module.exports = {
         if (error) {
           console.log(error)
         }
-        console.log({
+        res.send({
           success: true,
           message: 'Quest updated',
           data: quest
@@ -73,7 +67,7 @@ module.exports = {
     }, function(err, quest){
       if (err)
       console.log(err)
-      console.log({
+      res.send({
         success: true,
         message: "Quest deleted",
         data: quest
