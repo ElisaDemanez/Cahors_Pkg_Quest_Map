@@ -35,7 +35,7 @@ module.exports = {
   // Find a single Quest with a QuestId
   findOne: function(req, res) {
     var db = req.db;
-    Quest.findById(req.params.id, 'questID pokestopID', function (error, quest) {
+    Quest.find({"questID" : req.params.id }, 'questID pokestopID', function (error, quest) {
       if (error) { console.error(error); }
       res.send(quest)
     })
