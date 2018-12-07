@@ -87,7 +87,7 @@ async function load(data){
 				</select>
 				<button onclick="validateQuest()"> Valider </button>
 			`
-				var marker = L.marker([pokestop.coordinates[1],element.coordinates[0]], {icon: pokestopIcon})
+				var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon})
 				marker.addTo(map)
 				marker.bindPopup(content)
 			}
@@ -107,14 +107,27 @@ socket.on('connection', function(data) {
 
 function validateQuest() {
 	var q = document.getElementById('selectedQuest')
-	// console.log("quest id : ",q.value)
-	// console.log("pokestop id : ",q.dataset.pokestopId)
-	socket.emit('quest selected', {questID: q.value, pokestopID: q.dataset.pokestopId});
+	// request post => add the pokestopID and questID in database
+	$.ajax({
+		type: "POST",
+		url: '/quest',
+		dataType: 'json',
+		headers: {
+			"Content-Type":"application/json; charset=utf-8"
+	},
+		data: JSON.stringify({ 
+			"questID": q.value,
+			"pokestopID": q.dataset.pokestopId
+			}),
+		success: function(result){console.log(result)}
+		
+	});
 
-
-		load(jsonFile) // recharge les pokestops avec une quete dans la bdd
-		document.getElementsByClassName('leaflet-popup')[0].style.opacity = 0 // cache le popup du pokestop selectionné
+	load(jsonFile) // recharge les pokestops avec une quete dans la bdd
+	document.getElementsByClassName('leaflet-popup')[0].style.opacity = 0 // cache le popup du pokestop selectionné
 	
+	socket.emit('quest selected', {questID: q.value, pokestopID: q.dataset.pokestopId}); 
+
 }
 
 function modifyQuest(){

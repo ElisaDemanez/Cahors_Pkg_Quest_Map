@@ -30,7 +30,8 @@ app.use('/', questRoute);
     socket.emit('connection', {pokestops:pokestops.pokestops, quests:quests.quest});
 
     socket.on('quest selected', function (data) {
-    questController.create(data)
+      console.log('Une quête a été ajoutée')
+      // A ce moment il faut broadcast les nouvelles données de la database a tout le monde 
     });
 
   });

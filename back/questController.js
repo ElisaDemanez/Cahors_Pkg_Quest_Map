@@ -4,9 +4,8 @@ module.exports = {
  
   // Create and Save a new Quest
   create: function(req, res) {
-    
-    var questID = req.questID;
-    var pokestopID = req.pokestopID;
+    var questID = req.body.questID;
+    var pokestopID = req.body.pokestopID;
     
     var new_quest = new Quest({
       questID: questID,
@@ -17,7 +16,11 @@ module.exports = {
       if (error) {
         console.log("ERRORE",error)
       }
-      console.log('add success')
+      res.send({
+        success: true,
+        message: "Quest added",
+        data: new_quest
+      })
     })
   },
   
@@ -74,5 +77,17 @@ module.exports = {
       })
     })
   },
+
+  deleteAll: function(req,res) {
+    Quest.remove({}, function(err, quest){
+      if (err)
+      console.log(err)
+      res.send({
+        success: true,
+        message: "Quests deleted",
+        data: quest
+      })
+    })
+  }
   
 }
