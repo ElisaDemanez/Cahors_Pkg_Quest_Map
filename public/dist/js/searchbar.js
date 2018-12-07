@@ -21,6 +21,8 @@ Input.addEventListener('input', function(){
     displayList()
     populateList()
     DDownIconState = true
+
+    // need to update markers here 
 })
 
 function handleDropDownIcon(){
@@ -58,7 +60,7 @@ function generateLi(id) {
     var node = document.createTextNode(quests[id].name);
     var details = document.createTextNode(' : ');
     var pokemon = document.createTextNode(quests[id].pokemon);
-    
+
     li.appendChild(node)
     li.appendChild(details)
     li.appendChild(pokemon)
@@ -68,6 +70,7 @@ function generateLi(id) {
         Input.value = e.target.textContent
         hideList()
         DDownIconState = false 
+        displayPokestopsBySelectedQuest(e.target.id)
     })
     document.getElementById('search-list').appendChild(li)
 
