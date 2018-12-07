@@ -4,6 +4,10 @@
     box-sizing: border-box; 
 }
 
+.display-none {
+    display:none;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 body { 
@@ -68,4 +72,87 @@ body {
 #map {
     width: 100vw;
     height: 100vh;
+}
+
+/* retouche popup window */
+.transition-right-to-left{
+    transform: translateX(100vw);
+}
+#pokestop_background{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(to bottom right, #a1dd9d , #2bcda8);
+    width: 100vw;
+    height: 100vh;
+    z-index: 4000;
+    transition: 0.6s;
+}
+#pokestop_infos{
+    width: 90vw;
+    background:white;
+    height: 45vh;
+    position: absolute;
+    left:5vw;
+    top:30vh;
+    z-index: 5000;
+    border-radius:5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+#pokestop_button{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 27vh;
+    width: 100%;
+}
+.pokestop-infos-btn {
+    margin:30px;
+    padding:10px 30px;
+    border:none;
+    border-radius:100px;
+    color:white;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    font-family: 'Lato', sans-serif;
+    background-image: linear-gradient(to right, #a1dd9d , #2bcda8);
+    position: relative;
+}
+
+#pokestop_name{
+    display: flex;
+    justify-content: center;
+    margin: 34px auto;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: #3c3c3c;
+    font-weight: bold;
+}
+#pokestop_select{
+    position: absolute;
+    top: 17vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#pokestop_select select{
+    padding: 15px 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background:white;
+    -webkit-appearance: none;
+}
+#pokestop_select select option {
+    text-align: center;
+}
+#pokestop_close{
+    color:#acacac;
+    font-weight: bold;
+    position: absolute;
+    margin:10px;
+    font-size: 1rem;
+    right: 0;
+    cursor: pointer;
 }

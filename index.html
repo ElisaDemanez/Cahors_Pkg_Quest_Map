@@ -19,6 +19,20 @@
       </ul>
 
     <div id="map"></div>
+    <div id="pokestop_background" class="transition-right-to-left" >
+        <div id="pokestop_infos">
+            <div id="pokestop_close" onclick="togglePokestopInfos()">X</div>
+            <h3 id="pokestop_name">Nom du pokestop</h3>
+            <div id="pokestop_select">
+              <!-- <select><option>test</option></select> -->
+            </div>
+            <div id="pokestop_button">
+              <button class="pokestop-infos-btn"> Valider </button>
+            </div>
+          </div>
+    </div>
+    
+
 <script src="/dist/dependencies/jquery.js"></script>
 <script src="/dist/dependencies/leaflet.js"></script>
 <script src="/socket.io/socket.io.js"></script>

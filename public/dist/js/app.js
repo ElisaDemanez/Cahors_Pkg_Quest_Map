@@ -45,11 +45,11 @@ var storedQuests;
 async function load(data){
 
 		//get quests from database
-		await $.get('http://localhost:8000/quest', (quests) => { storedQuests = quests.quests })
+		await $.get('http://172.20.10.2:8000/quest', (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
 		data.quests.forEach((element,index) => {
-			selectOptions += `<option value="${index}">"${element.name}"</option>`
+			selectOptions += `<option value="${index}">${element.name}</option>`
 		});
 
 	// display pokestops
@@ -86,11 +86,20 @@ async function load(data){
 					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
 					${selectOptions}
 					</select>
-					<button onclick="validateQuest()"> Valider </button>
+					<button onclick="storeQuest()"> Valider </button>
 				`
 					var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon})
 					marker.addTo(map)
-					marker.bindPopup(content)
+					/* marker.bindPopup(content) */
+					marker.on("click", function (event) {
+						togglePokestopInfos()
+						document.getElementById('pokestop_name').innerHTML = pokestop.name
+						document.getElementById('pokestop_select').innerHTML = `
+						<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
+						${selectOptions}
+						</select>`
+						document.getElementById('pokestop_button').innerHTML = '<button onclick="storeQuest()" class="pokestop-infos-btn"> Valider </button>'
+				});
 				}
 			})
 			
@@ -108,12 +117,13 @@ socket.on('connection', function(data) {
 } )
 
 
-function validateQuest() {
+function storeQuest() {
+	togglePokestopInfos()
 	var q = document.getElementById('selectedQuest')
 	// request post => add the pokestopID and questID in database
 	$.ajax({
 		type: "POST",
-		url: '/quest',
+		url: 'http://172.20.10.2:8000/quest',
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -155,3 +165,15 @@ function editQuest(data){
 	 document.getElementsByClassName('leaflet-popup-content')[0].innerHTML =	content
 }
 
+function updateQuest(){
+
+}
+
+
+
+
+
+function togglePokestopInfos(){
+	/* document.getElementById('pokestop_background').classList.toggle('display-none') */
+	document.getElementById('pokestop_background').classList.toggle('transition-right-to-left')
+}
