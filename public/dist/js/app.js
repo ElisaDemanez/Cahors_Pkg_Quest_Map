@@ -62,35 +62,38 @@ async function load(data){
 					data.quests.forEach((quest,i) => {
 						if(el.questID === i ){
 							temp.push(quest)
+							temp.push(el)
 						}
 					});
 				}
+
+				if (temp.length > 0){
+					// si le pokestop a déja une quete dans la bdd 
+	
+					var content = `
+					<b> ${temp[0].name}  </b> 
+					<p>${temp[1].name}</p>
+					<p>${temp[1].pokemon}</p>
+					<button onclick='editQuest(${JSON.stringify(temp)})'> Modifier </button>` // temp[0] = données du pokestop , temp[1] = données de la quete 
+	
+					var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
+					marker.addTo(map)
+					marker.bindPopup(content)
+				} else {
+					// si le pokestop n'a pas de quete dans la bdd 
+					var content = `<b> ${pokestop.name}  </b>
+					<br>
+					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
+					${selectOptions}
+					</select>
+					<button onclick="validateQuest()"> Valider </button>
+				`
+					var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon})
+					marker.addTo(map)
+					marker.bindPopup(content)
+				}
 			})
-			if (temp.length > 0){
-				// si le pokestop a déja une quete dans la bdd 
-
-				var content = `
-				<b> ${temp[0].name}  </b> 
-				<p>${temp[1].name}</p>
-				<p>${temp[1].pokemon}</p>
-				<button onclick="modifyQuest()"> Modifier </button>` // temp[0] = données du pokestop , temp[1] = données de la quete 
-
-				var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
-				marker.addTo(map)
-				marker.bindPopup(content)
-			} else {
-				// si le pokestop n'a pas de quete dans la bdd 
-				var content = `<b> ${pokestop.name}  </b>
-				<br>
-				<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
-				${selectOptions}
-				</select>
-				<button onclick="validateQuest()"> Valider </button>
-			`
-				var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon})
-				marker.addTo(map)
-				marker.bindPopup(content)
-			}
+			
 			
 		});
 		
@@ -125,13 +128,30 @@ function validateQuest() {
 
 	load(jsonFile) // recharge les pokestops avec une quete dans la bdd
 	document.getElementsByClassName('leaflet-popup')[0].style.opacity = 0 // cache le popup du pokestop selectionné
-	
+
 	socket.emit('quest selected', {questID: q.value, pokestopID: q.dataset.pokestopId}); 
 
 }
 
-function modifyQuest(){
-	
-	 document.getElementsByClassName('leaflet-popup-content')[0].innerHTML =	'a venir'
+function editQuest(data){
+	console.log(data)
+
+	var selectOptions ="";
+		jsonFile.quests.forEach((element,index) => {
+			if(index !== data[2].questID){
+				selectOptions += `<option value="${index}">"${element.name}"</option>`
+			}	
+		});
+
+	var content = `<b> ${data[0].name}  </b>
+					<br>
+					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${data[2].pokestopID}">
+					<option value="${data[2].questID}">"${data[1].name}"</option>
+					${selectOptions}
+					</select>
+					<button onclick="updateQuest()"> Enregister </button>
+				`
+
+	 document.getElementsByClassName('leaflet-popup-content')[0].innerHTML =	content
 }
 
