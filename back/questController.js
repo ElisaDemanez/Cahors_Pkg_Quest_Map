@@ -43,22 +43,17 @@ module.exports = {
   
   // Update a quest identified by the questId in the request
   update: function(req, res) {
-    var db = req.db;
-    Quest.findById(req.params.id, 'questID pokestopID ', function (error, quest) {
+    var questID = req.body.questID;
+    var pokestopID = req.body.pokestopID;
+    Quest.findOneAndUpdate({"pokestopID" : pokestopID }, { "questID" : questID }, function (error, quest) {
       if (error) { console.error(error); }
-      
-      quest.name = req.body.name;
-      quest.pokestop = req.body.pokestop;
-      quest.save(function (error) {
-        if (error) {
-          console.log(error)
-        }
+      else{
         res.send({
           success: true,
           message: 'Quest updated',
           data: quest
         })
-      })
+      }
     })
   },
   

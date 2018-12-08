@@ -32,16 +32,10 @@ async function load(data){
 				if (temp.quest >= 0){
 					displayPokestopWithQuest(pID, temp.quest)
 				} else {
-					
-					var content = `<b> ${pokestop.name}  </b>
-					<br>
-					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
-					${selectOptions}
-					</select>
-					<button onclick="storeQuest()"> Valider </button>
-				`
+
 					var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon})
 					marker.addTo(map)
+
 					/* marker.bindPopup(content) */
 					marker.on("click", function (event) {
 						togglePokestopInfos()
@@ -59,7 +53,6 @@ async function load(data){
 }
 
 function storeQuest() {
-	togglePokestopInfos()
 	var q = document.getElementById('selectedQuest')
 	// request post => add the pokestopID and questID in database
 	$.ajax({
@@ -73,25 +66,48 @@ function storeQuest() {
 			"questID": q.value,
 			"pokestopID": q.dataset.pokestopId
 			}),
-		success: function(result){console.log(result)}
-		
+		success: function(result){
+			// refresh markers 
+			togglePokestopInfos()
+			deleteAllMarkers()
+			load(jsonFile) 
+			socket.emit('quest update'); 
+
+		}
+		// if fail  : display error message
 	});
-
-	// refresh markers 
-	deleteAllMarkers()
-	load(jsonFile) 
-
-	socket.emit('quest update'); 
 
 }
 
 function updateQuest(pokestopID) {
-	console.log(`mettre à jour le pokestop ${pokestopID}, TODO `)
+
+	var questID = document.getElementById('selectedQuest').value
+
+	$.ajax({
+		type: "PUT",
+		url: `http://localhost:8000/quest/${pokestopID}`,
+		dataType: 'json',
+		headers: {
+			"Content-Type":"application/json; charset=utf-8"
+	},
+		data: JSON.stringify({ 
+			"questID": questID,
+			"pokestopID": pokestopID
+			}),
+		success: function(result){
+			console.log('ici')
+			// refresh markers 
+			deleteAllMarkers()
+			load(jsonFile) 
+			togglePokestopInfos()
+			socket.emit('quest update'); 
+		}
+		// if fail  : display error message
+		
+	});
 }
 
 function editQuest(pokestopID, questID){
-var pokestop = jsonFile.pokestops[pokestopID];
-console.log(pokestop, pokestopID)
 	var quest = jsonFile.quests[questID]
 
 	var selectOptions ="";
@@ -109,7 +125,7 @@ console.log(pokestop, pokestopID)
 					`
 
 		document.getElementById('pokestop_button').innerHTML = `
-		<button class="pokestop-infos-btn" onclick="editQuest(${pokestopID},${questID})"> Enregistrer </button>
+		<button class="pokestop-infos-btn" onclick="updateQuest(${pokestopID})"> Enregistrer </button>
 		<button class="pokestop-infos-btn pokestop-infos-btn-del" onclick="togglePokestopInfos()"> Annuler </button>
 		`
 }
@@ -141,7 +157,7 @@ async function displayPokestopsBySelectedQuest(id){
 	  if(pokestopsQuests) {	
 		 pokestopsQuests.forEach(element => {
 		var pokestop = jsonFile.pokestops[element.pokestopID]
-		displayPokestopWithQuest(pokestop.pokestopID, element.questID)
+		displayPokestopWithQuest(element.pokestopID, element.questID)
 		});
 	} else{
 		//to update 
@@ -152,6 +168,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 function displayPokestopWithQuest(pokestopID, questID ){
 var pokestop = jsonFile.pokestops[pokestopID];
+
 	var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
 	marker.addTo(map)
 	marker.on("click", function (event) {
@@ -171,4 +188,3 @@ var pokestop = jsonFile.pokestops[pokestopID];
 // function displayPokestopWithoutQuest(pokestop){
 // 	console.log(pokestop)
 // }
-
