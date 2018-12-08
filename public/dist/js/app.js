@@ -100,6 +100,18 @@ function editQuest(pokestop, questID){
 			}	
 		});
 
+		document.getElementById('pokestop_select').innerHTML = `
+					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${pokestop.pokestopID}">
+					<option value="${questID}">"${quest.name}"</option>
+					${selectOptions}
+					</select>
+					`
+
+		document.getElementById('pokestop_button').innerHTML = `
+		<button class="pokestop-infos-btn" onclick=''> Enregistrer </button>
+		<button class="pokestop-infos-btn pokestop-infos-btn-del" onclick=''> Annuler </button>
+		`
+
 	var content = `<b> ${pokestop.name}  </b>
 					<br>
 					<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${pokestop.pokestopID}">
@@ -108,8 +120,6 @@ function editQuest(pokestop, questID){
 					</select>
 					<button onclick="updateQuest(${pokestop.pokestopID})"> Enregister </button>
 				`
-
-	 document.getElementsByClassName('leaflet-popup-content')[0].innerHTML = content
 }
 
 function updateQuest(){
@@ -143,12 +153,6 @@ async function displayPokestopsBySelectedQuest(id){
 
 function displayPokestopWithQuest(pokestop, questID, pokestopID){
 
-	var content = `
-	<b> ${pokestop.name}  </b> 
-	<p>${jsonFile.quests[questID].name}</p>
-	<p>${jsonFile.quests[questID].pokemon}</p>
-	<button onclick='editQuest(${JSON.stringify(pokestop)},${questID})'> Modifier </button>`
-
 	var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
 	marker.addTo(map)
 	marker.on("click", function (event) {
@@ -174,8 +178,7 @@ function deleteQuest (pokestopID) {
 			deleteAllMarkers()
 			load(jsonFile) 
     }
-});
-
+	});
 }
 
 // function displayPokestopWithoutQuest(pokestop){
