@@ -1,9 +1,16 @@
  
 // initialize the map
+var token ="pk.eyJ1IjoieGFuYWVoIiwiYSI6ImNqcGZkams1ZjA5NGszcG96Z29teDFjYWoifQ.RVPN2RKgJ7S8VsgVGSgMqQ"; // replace with your Mapbox API Access token. Create a Mabpox account and find it on https://www.mapbox.com/studio/
+
 var map = L.map('map', {
 	scrollWheelZoom: true,
 	zoomControl: false
-});
+}); 
+var gl = L.mapboxGL({
+    accessToken: token,
+    style: 'mapbox://styles/xanaeh/cjpfdtzy02j8y2rrwfe72ok82'
+}).addTo(map);
+
 
 L.control.zoom({
 	position:'bottomleft'
@@ -13,10 +20,10 @@ L.control.zoom({
 map.setView([44.4490425,1.4384117], 15);
  
 // create a tileLayer with the tiles, attribution
-var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+/* var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+}).addTo(map); */
 
 // icons pokestops
 var pokestopIcon = L.icon({

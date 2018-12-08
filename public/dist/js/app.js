@@ -10,7 +10,7 @@ socket.on('connection', function(data) {
 
 async function load(data){
 		//get quests from database
-		await $.get('http://localhost:8000/quest', (quests) => { storedQuests = quests.quests })
+		await $.get('http://172.20.10.2:8000/quest', (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
 		data.quests.forEach((element,index) => {
@@ -64,7 +64,7 @@ function storeQuest() {
 	// request post => add the pokestopID and questID in database
 	$.ajax({
 		type: "POST",
-		url: 'http://localhost:8000/quest',
+		url: 'http://172.20.10.2:8000/quest',
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -125,7 +125,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 	var pokestopsQuests;
 	//get questsID and pokestopID by questID
-	await $.get(`http://localhost:8000/quest/${id}`, (data) => { pokestopsQuests = data})
+	await $.get(`http://172.20.10.2:8000/quest/${id}`, (data) => { pokestopsQuests = data})
 	deleteAllMarkers()
 	 // display markers
 	 console.log(pokestopsQuests)

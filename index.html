@@ -5,6 +5,7 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>PkéGo map app</title>
     <link rel="stylesheet" href="/dist/css/leaflet.css">
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
     <link href="/dist/css/app.css" rel="stylesheet">
 </head>
   <body>
@@ -17,7 +18,7 @@
       <ul id="search-list">
         <!-- populated in searchbar.js -->
       </ul>
-
+ 
     <div id="map"></div>
     <div id="pokestop_background" class="transition-right-to-left" >
         <div id="pokestop_infos">
@@ -35,6 +36,8 @@
 
 <script src="/dist/dependencies/jquery.js"></script>
 <script src="/dist/dependencies/leaflet.js"></script>
+<script src="https://unpkg.com/mapbox-gl-leaflet@0.0.3/leaflet-mapbox-gl.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/dist/js/map.js"></script>
 <script src="/dist/js/app.js"></script>
