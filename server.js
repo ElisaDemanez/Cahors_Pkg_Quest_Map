@@ -29,7 +29,7 @@ app.use('/', questRoute);
   io.on('connection', function(socket){
     socket.emit('connection', {pokestops:pokestops.pokestops, quests:quests.quest});
 
-    socket.on('quest selected', function (data) {
+    socket.on('quest update', function () {
       console.log('Une quête a été ajoutée')
       // A ce moment il faut broadcast les nouvelles données de la database a tout le monde 
     });
