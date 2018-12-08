@@ -10,6 +10,7 @@ var quests = null;
 socket.on('connection', function(data) {
     quests = data.quests
     populateList()
+    document.getElementById("searchbar-empty-icon").classList.add('display-none')
 });
 
 DDownIcon.addEventListener('click', function(){
@@ -22,6 +23,11 @@ Input.addEventListener('input', function(){
     populateList()
     DDownIconState = true
 
+    if(Input.value == 0) {
+        document.getElementById("searchbar-empty-icon").classList.add('display-none')
+    } else{
+        document.getElementById("searchbar-empty-icon").classList.remove('display-none')
+    }
     // need to update markers here 
 })
 
@@ -74,6 +80,9 @@ function generateLi(id) {
     })
     document.getElementById('search-list').appendChild(li)
 
+}
+function emptySearchbar() {
+    Input.value = ''
 }
 
 function displayList() {
