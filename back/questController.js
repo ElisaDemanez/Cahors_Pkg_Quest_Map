@@ -66,7 +66,7 @@ module.exports = {
   delete: function(req, res) {
     var db = req.db;
     Quest.remove({
-      _id: req.params.id
+      pokestopID: req.params.id
     }, function(err, quest){
       if (err)
       console.log(err)

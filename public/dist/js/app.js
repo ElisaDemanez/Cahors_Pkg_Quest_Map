@@ -20,17 +20,17 @@ async function load(data){
 		data.pokestops.forEach((pokestop, index) => {
 			
 			var temp = {};
+			var pID;
 			// Search if the pokestop has a selected quest
 			storedQuests.forEach( (el) =>{
 				if ( index === el.pokestopID ){
 					temp.quest = el.questID
-					
+					pID = el.pokestopID
 				}
 			})
 			// If it has a selected quest
 				if (temp.quest >= 0){
-					displayPokestopWithQuest(pokestop, temp.quest)
-					
+					displayPokestopWithQuest(pokestop, temp.quest, pID)
 				} else {
 					
 					var content = `<b> ${pokestop.name}  </b>
@@ -141,7 +141,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 }
 
-function displayPokestopWithQuest(pokestop, questID){
+function displayPokestopWithQuest(pokestop, questID, pokestopID){
 
 	var content = `
 	<b> ${pokestop.name}  </b> 
@@ -151,7 +151,31 @@ function displayPokestopWithQuest(pokestop, questID){
 
 	var marker = L.marker([pokestop.coordinates[1],pokestop.coordinates[0]], {icon: pokestopIcon2})
 	marker.addTo(map)
-	marker.bindPopup(content)
+	marker.on("click", function (event) {
+		togglePokestopInfos()
+		document.getElementById('pokestop_name').innerHTML = pokestop.name
+		document.getElementById('pokestop_select').innerHTML = `
+		<h4>${jsonFile.quests[questID].name}</h4>
+		<h5>${jsonFile.quests[questID].pokemon}</h5>
+		`
+		document.getElementById('pokestop_button').innerHTML = `
+		<button class="pokestop-infos-btn" onclick='editQuest(${JSON.stringify(pokestop)},${questID})'> Modifier </button>
+		<button class="pokestop-infos-btn pokestop-infos-btn-del" onclick='deleteQuest(${JSON.stringify(pokestopID)})'> Supprimer </button>
+		`
+});
+}
+
+function deleteQuest (pokestopID) {
+	$.ajax({
+    url: `http://localhost:8000/quest/${pokestopID}`,
+    type: 'DELETE',
+    success: function(result) {
+			togglePokestopInfos()
+			deleteAllMarkers()
+			load(jsonFile) 
+    }
+});
+
 }
 
 // function displayPokestopWithoutQuest(pokestop){
