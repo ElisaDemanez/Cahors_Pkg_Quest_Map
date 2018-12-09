@@ -44,6 +44,7 @@ async function load(data){
 						togglePokestopInfos()
 						document.getElementById('pokestop_name').innerHTML = pokestop.name
 						document.getElementById('pokestop_select').innerHTML = `
+						<p class="labels">Choix Quête</p>
 						<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
 						${selectOptions}
 						</select>`
@@ -178,8 +179,14 @@ var pokestop = jsonFile.pokestops[pokestopID];
 		togglePokestopInfos()
 		document.getElementById('pokestop_name').innerHTML = pokestop.name
 		document.getElementById('pokestop_select').innerHTML = `
+		<div class="div_infos">
+		<p class="labels">Quête</p>
 		<h4>${jsonFile.quests[questID].name}</h4>
+		</div>
+		<div class="div_infos">
+		<p class="labels">Pokémon(s)</p>
 		<h5>${jsonFile.quests[questID].pokemon}</h5>
+		</div>
 		`
 		document.getElementById('pokestop_button').innerHTML = `
 		<button class="pokestop-infos-btn" onclick='editQuest(${pokestopID},${questID})'> Modifier </button>

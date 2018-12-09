@@ -91,29 +91,28 @@ body {
     height: 100vh;
     z-index: 4000;
     transition: 0.4s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #pokestop_infos{
     width: 90vw;
     background:white;
-    min-height: 50vh;
-    position: absolute;
-    left:5vw;
-    top:30vh;
     z-index: 5000;
     border-radius:5px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding:30px 0;
+    margin-top: -5vh;
 }
 #pokestop_button{
     display: flex;
     justify-content: center;
-    position: absolute;
-    top: 27vh;
     width: 100%;
     flex-direction: column;
     align-items: center;
 }
 .pokestop-infos-btn {
-    margin:30px;
+    margin:10px;
     padding:10px 30px;
     border:none;
     border-radius:100px;
@@ -126,20 +125,18 @@ body {
     cursor: pointer;
 }
 .pokestop-infos-btn-del {
-    margin: 0;
-    top: -25px;
+    margin-bottom: 0;
     color: #2bcda8;
     background: none;
 }
 .pokestop-infos-btn-val {
-    top:5vh;
+
 }
 
 #pokestop_name{
     display: flex;
     justify-content: center;
     margin: 34px auto;
-    position: absolute;
     width: 100%;
     text-align: center;
     color: #576566;
@@ -148,13 +145,12 @@ body {
     font-size: 1.5rem;
 }
 #pokestop_select{
-    position: absolute;
-    top: 17vh;
-    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    margin: 40px 0;
+
 }
 #pokestop_select h4,#pokestop_select h5 {
     width: 80%;
@@ -164,21 +160,44 @@ body {
 }
 #pokestop_select select{
     padding: 15px 5px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    background:white;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    -moz-appearance: none;
     -webkit-appearance: none;
+    box-shadow: none;
+
 }
-#pokestop_select select option {
+.div_infos{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.labels {
+    color: #b2b7ba;
     text-align: center;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding:5px;
 }
 #pokestop_close{
     color:#acacac;
-    font-weight: bold;
-    position: absolute;
     margin:10px;
     font-size: 1rem;
-    right: 0;
     cursor: pointer;
+    font-weight: 900;
+    font-family: 'Nunito', sans-serif;
+    position: absolute;
+    text-align: right;
+    width: 84vw;
+    margin-top: -20px;
 }
+
+.leaflet-control-zoom {
+    position: fixed;
+    bottom: 0;
+}
+
