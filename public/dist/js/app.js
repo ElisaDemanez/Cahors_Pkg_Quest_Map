@@ -13,7 +13,7 @@ socket.on('connection', function(data) {
 
 async function load(data){
 		//get quests from database
-		await $.get(`http://${dev}:8000/quest`, (quests) => { storedQuests = quests.quests })
+		await $.get(`http://${localhost}:8000/quest`, (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
 		data.quests.forEach((element,index) => {
@@ -61,7 +61,7 @@ function storeQuest() {
 	// request post => add the pokestopID and questID in database
 	$.ajax({
 		type: "POST",
-		url: `http://${dev}:8000/quest`,
+		url: `http://${localhost}:8000/quest`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -80,7 +80,7 @@ function storeQuest() {
 		}
 		// if fail  : display error message
 	});
-
+	toast('Pokéstop mis à jour : Quête ajoutée')
 }
 
 function updateQuest(pokestopID) {
@@ -89,7 +89,7 @@ function updateQuest(pokestopID) {
 
 	$.ajax({
 		type: "PUT",
-		url: `http://${dev}:8000/quest/${pokestopID}`,
+		url: `http://${localhost}:8000/quest/${pokestopID}`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -109,6 +109,7 @@ function updateQuest(pokestopID) {
 		// if fail  : display error message
 		
 	});
+	toast('Pokéstop mis à jour : Quête modifiée')
 }
 
 function editQuest(pokestopID, questID){
@@ -136,7 +137,7 @@ function editQuest(pokestopID, questID){
 
 function deleteQuest (pokestopID) {
 	$.ajax({
-    url: `http://${dev}:8000/quest/${pokestopID}`,
+    url: `http://${localhost}:8000/quest/${pokestopID}`,
     type: 'DELETE',
     success: function(result) {
 			togglePokestopInfos()
@@ -144,6 +145,7 @@ function deleteQuest (pokestopID) {
 			load(jsonFile) 
     }
 	});
+	toast('Pokéstop mis à jour : Quête supprimée')
 }
 
 function togglePokestopInfos(){
@@ -155,7 +157,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 	var pokestopsQuests;
 	//get questsID and pokestopID by questID
-	await $.get(`http://${dev}:8000/quest/${id}`, (data) => { pokestopsQuests = data})
+	await $.get(`http://${localhost}:8000/quest/${id}`, (data) => { pokestopsQuests = data})
 	deleteAllMarkers()
 	 // display markers
 	  if(pokestopsQuests) {	
@@ -198,3 +200,30 @@ var pokestop = jsonFile.pokestops[pokestopID];
 // function displayPokestopWithoutQuest(pokestop){
 // 	console.log(pokestop)
 // }
+
+function toast(message, pokestopID,) {
+	// definition de la liste où faire apparaitre le toast
+	var listeMessages = document.getElementById('toasts');
+	// definition et creation du toast
+	var toast = document.createElement('li')
+	toast.setAttribute('class','toast')
+	toast.setAttribute('onclick','deleteToast(this)')
+
+	var img = document.createElement('img')
+	img.setAttribute('src','/dist/img/pokestops/0.jpg')
+
+	var texte = document.createElement('p')
+
+	toast.appendChild(img)
+	toast.appendChild(texte)
+	texte.innerHTML = message
+
+	listeMessages.appendChild(toast)
+
+	setTimeout(function(){ deleteToast(toast); }, 3000);
+}
+
+function deleteToast(toast) {
+	console.log(toast)
+	toast.remove()
+}

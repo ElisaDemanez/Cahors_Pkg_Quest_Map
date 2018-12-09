@@ -210,3 +210,35 @@ body {
     bottom: 0;
 }
 
+/* Toasts */
+
+.toasts{
+ position: fixed;
+ width: 92vw;
+ bottom: 10px;
+ left: 3vw;
+ z-index: 10000;
+}
+.toast{
+    background: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    min-height: 80px;
+    align-items: center;
+    font-size: 0.9rem;
+    transition: 1s;
+    margin: 5px 0;
+}
+.toast img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin-right: 5px;
+}
+.toast p {
+ text-align: center;
+ width: 80%;
+}
