@@ -83,6 +83,8 @@ function generateLi(id) {
 }
 function emptySearchbar() {
     Input.value = ''
+    deleteAllMarkers()
+	load(jsonFile) 
 }
 
 function displayList() {

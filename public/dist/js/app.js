@@ -3,6 +3,9 @@ var socket = io();
 var jsonFile; //  pour stocker les données des JSON quetes/pokestops
 var storedQuests; // Quêtes dans la bdd associées à un pokestop
 
+var dev = '172.20.10.2';
+var localhost = 'localhost'
+
 socket.on('connection', function(data) {
 	load(data)
 	jsonFile = data
@@ -10,7 +13,7 @@ socket.on('connection', function(data) {
 
 async function load(data){
 		//get quests from database
-		await $.get('http://localhost:8000/quest', (quests) => { storedQuests = quests.quests })
+		await $.get(`http://${dev}:8000/quest`, (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
 		data.quests.forEach((element,index) => {
@@ -44,7 +47,7 @@ async function load(data){
 						<select name="selectedQuest" id="selectedQuest" data-pokestop-id="${index}">
 						${selectOptions}
 						</select>`
-						document.getElementById('pokestop_button').innerHTML = '<button onclick="storeQuest()" class="pokestop-infos-btn"> Valider </button>'
+						document.getElementById('pokestop_button').innerHTML = '<button onclick="storeQuest()" class="pokestop-infos-btn pokestop-infos-btn-val"> Valider </button>'
 				});
 				}
 			
@@ -57,7 +60,7 @@ function storeQuest() {
 	// request post => add the pokestopID and questID in database
 	$.ajax({
 		type: "POST",
-		url: 'http://localhost:8000/quest',
+		url: `http://${dev}:8000/quest`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -85,7 +88,7 @@ function updateQuest(pokestopID) {
 
 	$.ajax({
 		type: "PUT",
-		url: `http://localhost:8000/quest/${pokestopID}`,
+		url: `http://${dev}:8000/quest/${pokestopID}`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -132,7 +135,7 @@ function editQuest(pokestopID, questID){
 
 function deleteQuest (pokestopID) {
 	$.ajax({
-    url: `http://localhost:8000/quest/${pokestopID}`,
+    url: `http://${dev}:8000/quest/${pokestopID}`,
     type: 'DELETE',
     success: function(result) {
 			togglePokestopInfos()
@@ -151,7 +154,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 	var pokestopsQuests;
 	//get questsID and pokestopID by questID
-	await $.get(`http://localhost:8000/quest/${id}`, (data) => { pokestopsQuests = data})
+	await $.get(`http://${dev}:8000/quest/${id}`, (data) => { pokestopsQuests = data})
 	deleteAllMarkers()
 	 // display markers
 	  if(pokestopsQuests) {	
