@@ -4,7 +4,8 @@ var jsonFile; //  pour stocker les données des JSON quetes/pokestops
 var storedQuests; // Quêtes dans la bdd associées à un pokestop
 
 //var environnement = '192.168.1.44';
- var environnement = 'localhost'
+var environnement = 'lgdm.ddns.net'
+// var environnement = 'localhost'
 
 socket.on('connection', function(data) {
 	load(data)
