@@ -16,7 +16,7 @@ var pokestops = require('./pokestops_cahors.json');
 var quests = require('./quest.json');
 
 
-const port = 8000;
+const port = 4600;
 app.use(bodyParser.json())
 app.use(express.static('public')); 
 app.use('/', questRoute);

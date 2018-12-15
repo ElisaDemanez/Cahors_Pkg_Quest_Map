@@ -3,8 +3,8 @@ var socket = io();
 var jsonFile; //  pour stocker les données des JSON quetes/pokestops
 var storedQuests; // Quêtes dans la bdd associées à un pokestop
 
-var dev = '172.20.10.2';
-var localhost = 'localhost'
+//var environnement = '192.168.1.44';
+ var environnement = 'localhost'
 
 socket.on('connection', function(data) {
 	load(data)
@@ -13,7 +13,7 @@ socket.on('connection', function(data) {
 
 async function load(data){
 		//get quests from database
-		await $.get(`http://${localhost}:8000/quest`, (quests) => { storedQuests = quests.quests })
+		await $.get(`http://${environnement}:4600/quest`, (quests) => { storedQuests = quests.quests })
 		//select for quests
 		var selectOptions ="";
 		data.quests.forEach((element,index) => {
@@ -61,7 +61,7 @@ function storeQuest() {
 	// request post => add the pokestopID and questID in database
 	$.ajax({
 		type: "POST",
-		url: `http://${localhost}:8000/quest`,
+		url: `http://${environnement}:4600/quest`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -89,7 +89,7 @@ function updateQuest(pokestopID) {
 
 	$.ajax({
 		type: "PUT",
-		url: `http://${localhost}:8000/quest/${pokestopID}`,
+		url: `http://${environnement}:4600/quest/${pokestopID}`,
 		dataType: 'json',
 		headers: {
 			"Content-Type":"application/json; charset=utf-8"
@@ -137,7 +137,7 @@ function editQuest(pokestopID, questID){
 
 function deleteQuest (pokestopID) {
 	$.ajax({
-    url: `http://${localhost}:8000/quest/${pokestopID}`,
+    url: `http://${environnement}:4600/quest/${pokestopID}`,
     type: 'DELETE',
     success: function(result) {
 			togglePokestopInfos()
@@ -157,7 +157,7 @@ async function displayPokestopsBySelectedQuest(id){
 
 	var pokestopsQuests;
 	//get questsID and pokestopID by questID
-	await $.get(`http://${localhost}:8000/quest/${id}`, (data) => { pokestopsQuests = data})
+	await $.get(`http://${environnement}:4600/quest/${id}`, (data) => { pokestopsQuests = data})
 	deleteAllMarkers()
 	 // display markers
 	  if(pokestopsQuests) {	
@@ -227,3 +227,5 @@ function deleteToast(toast) {
 	console.log(toast)
 	toast.remove()
 }
+
+
